@@ -14,6 +14,12 @@ import { api } from '../provider/api';
     const [isChecked, setIsChecked] = useState(false);
     const [showSignupWindow, setShowSignupWindow] = useState(false);
 
+    //stocker infomation pour sign-up
+    const[email,setEmail]= useState('');
+    const[username,setUsername]= useState('');
+    const [cPassword,setCpassword]= useState('');
+
+
     const handleButtonIconClick = () => {
       setShowLoginWindow(true);
     }
@@ -61,13 +67,6 @@ import { api } from '../provider/api';
 
     const handleGenderChange = (event) => {
       setGender(event.target.value);
-    }
-
-    let data_Signup = {
-      "emailOrPhone": emailOrPhone,
-      "password": password,
-      "newPassword": confirmPassword,
-      "username": username
     }
     const signUp = async () => {
       try {
