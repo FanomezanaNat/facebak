@@ -4,7 +4,10 @@ import './assets/css/Navbar.css'
 function App() {
   return (
     <>
+
     <Navbar/>
+
+    <SignUp/>
     </>
   );
 }
