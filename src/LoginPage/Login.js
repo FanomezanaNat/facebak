@@ -67,6 +67,13 @@ import { api } from '../provider/api';
 
     const handleGenderChange = (event) => {
       setGender(event.target.value);
+      
+    }
+    let data_Signup = {
+      "emailOrPhone": emailOrPhone,
+      "password": password,
+      "newPassword": cPassword,
+      "username": username
     }
     const signUp = async () => {
       try {
