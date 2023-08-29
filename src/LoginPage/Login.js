@@ -18,6 +18,7 @@ function Login() {
   const [username, setUsername] = useState('');
   const [password, setpassword] = useState('');
   const [confirmPassword,setConfirmPassword]= useState('');
+  const [passwordMismatch, setPasswordMismatch] = useState(false)
 
 
   const handleButtonIconClick = () => {
@@ -76,9 +77,11 @@ function Login() {
   }
   const handlePasswordChande = (event) => {
     setpassword(event.target.value)
+    setPasswordMismatch(false);
   }
   const handleConfirmPassword=(event)=>{
     setConfirmPassword(event.target.value)
+    setPasswordMismatch(false);
   }
 
   let data_Signup = {
@@ -90,6 +93,10 @@ function Login() {
 
   const signUp = async () => {
     try {
+      if (password !== confirmPassword) {
+        setPasswordMismatch(true);
+        return;
+      }
       const response = await api.post('/users', data_Signup);
       if (response.status === 200) {
         console.log("Succesull, a new user added !");
@@ -213,11 +220,24 @@ function Login() {
                         <input className='inputs' placeholder='Username' value={username} onChange={handelUsernameChange} />
                       </div>
                       <input className='inputs' placeholder='Email' value={email} onChange={handleEmailChande} />
-                      <input className='inputs' placeholder='New password' type='password' value={password}
-                        onChange={handlePasswordChande} />
-                        <input className='inputs' placeholder='Confirm password' value={confirmPassword} onChange={handleConfirmPassword} type='password'></input>
+                      <input
+                        className={`inputs ${passwordMismatch ? 'error' : ''}`}
+                        placeholder='New password'
+                        type='password'
+                        value={password}
+                        onChange={handlePasswordChande}
+                      />
+                      <input
+                        className={`inputs ${passwordMismatch ? 'error' : ''}`}
+                        placeholder='Confirm password'
+                        value={confirmPassword}
+                        onChange={handleConfirmPassword}
+                        type='password'
+                      />
+                        {passwordMismatch && (
+                          <p className='errorText'>Passwords do not match</p> 
+                        )}
                     </div>
-
                     <div className='birthdayLabel'>
                       <label>
                         Birthday <FontAwesomeIcon icon={faQuestionCircle} />

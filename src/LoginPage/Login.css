@@ -2,7 +2,11 @@
     font-family:Arial, Helvetica, sans-serif ;
     
 }
-
+.errorText {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+  }
 .login_body{
     background-color: #f0f2f5;
 
