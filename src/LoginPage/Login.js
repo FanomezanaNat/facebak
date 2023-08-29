@@ -16,7 +16,8 @@ function Login() {
   //stocker infomation pour sign-up
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
-  const [newPassword, setNewPassword] = useState('');
+  const [password, setpassword] = useState('');
+  const [confirmPassword,setConfirmPassword]= useState('');
 
 
   const handleButtonIconClick = () => {
@@ -67,36 +68,48 @@ function Login() {
   const handleGenderChange = (event) => {
     setGender(event.target.value);
   }
-  const handelUsernameChange= (event) =>{
+  const handelUsernameChange = (event) => {
     setUsername(event.target.value)
   }
   const handleEmailChande = (event) => {
     setEmail(event.target.value)
   }
-  const handlePasswordChande =(event) =>{
-    setNewPassword(event.target.value)
+  const handlePasswordChande = (event) => {
+    setpassword(event.target.value)
+  }
+  const handleConfirmPassword=(event)=>{
+    setConfirmPassword(event.target.value)
   }
 
   let data_Signup = {
     "username": username,
     "email": email,
-    "newPassword": newPassword,
+    "password": password,
+    "confirmPassword": confirmPassword
   }
+
   const signUp = async () => {
     try {
       const response = await api.post('/users', data_Signup);
       if (response.status === 200) {
-        // La requête POST a réussi
-        console.log("Inscription réussie !");
-        // Vous pouvez également rediriger l'utilisateur vers une autre page ici si nécessaire.
+        console.log("Succesull, a new user added !");
       } else {
-        // La requête POST a échoué
-        console.log("Échec de l'inscription. Code de statut HTTP :", response.status);
+        console.log("Ooops . HTTP status code :", response.status);
         console.log("response", response.data);
       }
     } catch (error) {
       console.log("error,", error.response.data.message);
 
+    }
+  }
+  const login= async()=>{
+    try {
+       await api.get('/users')
+       console.log("Successfull, you're logging in now");
+      
+    } catch (error) {
+      console.log("error",error);
+      
     }
   }
 
@@ -137,8 +150,8 @@ function Login() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)} />
                       <input placeholder='Password' type='password'
-                        value={newPassword}
-                        onChange={(e) => setNewPassword(e.target.value)} />
+                        value={password}
+                        onChange={(e) => setpassword(e.target.value)} />
                     </div>
                     <div className='checkBox'>
                       <label>
@@ -167,10 +180,10 @@ function Login() {
               value={email}
               onChange={(e) => setEmail(e.target.value)} />
             <input placeholder='Password' type='password'
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)} />
+              value={password}
+              onChange={(e) => setpassword(e.target.value)} />
           </div>
-          <button className='login_button'>
+          <button className='login_button' onClick={login}>
             Log in
           </button>
           <Link className='auth'>Forget password?</Link>
@@ -199,9 +212,10 @@ function Login() {
                       <div className='nameInput'>
                         <input className='inputs' placeholder='Username' value={username} onChange={handelUsernameChange} />
                       </div>
-                      <input className='inputs' placeholder='email' value={email} onChange={handleEmailChande} />
-                      <input className='inputs' placeholder='New password' type='password' value={newPassword}
+                      <input className='inputs' placeholder='Email' value={email} onChange={handleEmailChande} />
+                      <input className='inputs' placeholder='New password' type='password' value={password}
                         onChange={handlePasswordChande} />
+                        <input className='inputs' placeholder='Confirm password' value={confirmPassword} onChange={handleConfirmPassword} type='password'></input>
                     </div>
 
                     <div className='birthdayLabel'>
@@ -275,7 +289,7 @@ function Login() {
 
                     <div className='info'>
                       <p>
-                        People who use our service may have uploaded your contact information to Facebook. <a href="#">Learn more.</a>
+                        People who use our service may have uploaded your contact information to Facebook. <a href="/feed">Learn more.</a>
                       </p>
                       <br />
                       <p>
